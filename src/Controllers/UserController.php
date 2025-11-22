@@ -241,4 +241,71 @@ class UserController
 
         $this->jsonResponse(['message' => 'Authenticated successfully.'], 200);
     }
+
+    public function findByID(): void
+    {
+        $id = $_GET['id'] ?? null;
+        if ($id === null || $id === '') {
+            $this->jsonResponse(['error' => 'id is required.'], 400);
+            return;
+        }
+
+        try {
+            $user = $this->repo()->findByID((int)$id);
+        } catch (\Throwable $e) {
+            $this->jsonResponse(['error' => 'Failed to fetch user: ' . $e->getMessage()], 500);
+            return;
+        }
+
+        if (!$user) {
+            $this->jsonResponse(['error' => 'User not found.'], 404);
+            return;
+        }
+
+        $this->jsonResponse($this->userToArray($user));
+    }
+
+    public function findByCPF(): void
+    {
+        $cpf = $_GET['cpf'] ?? null;
+        if ($cpf === null || $cpf === '') {
+            $this->jsonResponse(['error' => 'cpf is required.'], 400);
+            return;
+        }
+
+        try {
+            $cpfVo = new CPF($cpf);
+        } catch (\Throwable $e) {
+            $this->jsonResponse(['error' => 'Invalid CPF format: ' . $e->getMessage()], 400);
+            return;
+        }
+
+        try {
+            $user = $this->repo()->findByCPF($cpfVo);
+        } catch (\Throwable $e) {
+            $this->jsonResponse(['error' => 'Failed to fetch user: ' . $e->getMessage()], 500);
+            return;
+        }
+
+        if (!$user) {
+            $this->jsonResponse(['error' => 'User not found.'], 404);
+            return;
+        }
+
+        $this->jsonResponse($this->userToArray($user));
+    }
+
+    private function userToArray(User $user): array
+    {
+        return [
+            'id' => $user->getId(),
+            'full_name' => $user->getFullName(),
+            'birth_date' => (string)$user->getBirthDate(),
+            'cpf' => (string)$user->getCpf(),
+            'phone' => (string)$user->getPhone(),
+            'username' => $user->getUsername(),
+            'email' => (string)$user->getEmail(),
+            // intentionally not returning password
+        ];
+    }
 }

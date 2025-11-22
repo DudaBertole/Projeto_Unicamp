@@ -1,13 +1,5 @@
-CREATE DATABASE unicamp;
-USE unicamp;
-
-
-CREATE TABLE aluno (
-	matricula INT PRIMARY KEY,
-	nome VARCHAR(100) NOT NULL,
-	curso VARCHAR(100) NOT NULL,
-	ano_ingresso INT NOT NULL
-);
+CREATE DATABASE BitMemory;
+USE BitMemory;
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
