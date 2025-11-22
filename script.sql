@@ -23,12 +23,11 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS games (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    board VARCHAR(50) NOT NULL,
+    board_size INT NOT NULL,
     moves_count INT NOT NULL,
-    mode ENUM('classic', 'turbo') NOT NULL,
-    time VARCHAR(20) NOT NULL,
-    result ENUM('win', 'loss') NOT NULL,
-    play_date DATE NOT NULL,
-    play_time TIME NOT NULL,
+    mode CHAR(20) NOT NULL,
+    duration_seconds INT NOT NULL,
+    result CHAR(1) NOT NULL,
+    play_datetime DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );

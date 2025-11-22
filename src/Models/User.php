@@ -9,7 +9,7 @@ use App\ValueObjects\BirthDate;
 
 class User
 {
-    private $id;
+    private int $id;
     private string $full_name;
     private BirthDate $birth_date;
     private CPF $cpf;

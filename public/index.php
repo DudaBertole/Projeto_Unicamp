@@ -7,7 +7,7 @@ if (file_exists($dotenvPath . '/.env')) {
     $dotenv->load();
 }
 
-$routes = require __DIR__ . '/../src/Routes/AlunoAPI.php';
+$routes = require __DIR__ . '/../src/RoutesAPI.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
